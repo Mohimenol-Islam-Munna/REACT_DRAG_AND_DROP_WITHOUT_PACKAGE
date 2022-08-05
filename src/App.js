@@ -24,7 +24,6 @@ function App() {
   // add to do handler
   const addToDoHandler = (e) => {
     e.preventDefault();
-    console.log("inputText : ", inputText);
 
     setcountTodo((prev) => prev + 1);
 
@@ -45,11 +44,6 @@ function App() {
     // clear input filed
     setInputText("");
   };
-
-  console.log("mainToDoState : ", mainToDoState);
-  console.log("progressToDoState : ", progressToDoState);
-
-  console.log("finalToDoState : ", finalToDoState);
 
   // drag start
   const dragStartHandler = (e) => {
@@ -135,7 +129,6 @@ function App() {
   // drag over
   const dragOverHandler = (e) => {
     e.preventDefault();
-
     return false;
   };
 
