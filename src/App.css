@@ -4,7 +4,8 @@ h2 {
 }
 
 .container {
-  width: 60%;
+  width: 100%;
+  display: flex;
   border: 2px solid salmon;
   padding: 20px 0px;
   margin: 0px auto;
@@ -13,12 +14,13 @@ h2 {
 .child_container {
   border: 1px solid palegreen;
   padding: 20px 0px;
+  width: 33.33%;
   margin: 20px 0px;
 }
 
 .child_container > ul {
   list-style-type: none;
-  min-height: 150px;
+  min-height: 350px;
 }
 
 .child_container > ul > li {
