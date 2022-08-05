@@ -12,25 +12,45 @@ function App() {
 
   const [secondtState, setSecondState] = useState([]);
 
-
-  // console.log("firstState : ", firstState)
+  // console.log("firstState : ", firstState);
+  console.log("secondtState : ", secondtState);
 
   // drag start
   const dragStartHandler = (e) => {
-    console.log("drag start handler event ", e);
     e.target.style.opacity = "0.5";
     e.target.style.backgroundColor = "green";
 
+    e.dataTransfer.dropEffect = "move";
     e.dataTransfer.effectAllowed = "move";
+
+    if (e.target.parentElement.id == "ul-2") {
+      let removeItem = secondtState.filter((item) => item.id != e.target.id);
+
+      console.log("removeItem :", removeItem);
+
+      setSecondState((prev) => {
+        return [...prev.filter((item) => item.id != e.target.id)];
+      });
+    }
+
     e.dataTransfer.setData("text/html", e.target.id);
   };
 
   // drop handler
-  const dropHandler = (e) => {
-    console.log("drop handler event ", e);
+  const dropHandler = (e, num) => {
     e.stopPropagation();
 
-    const data = e.dataTransfer.getData("text/html");
+    let data = e.dataTransfer.getData("text/html");
+
+    let dragedItem = firstState.find((item) => item.id == data);
+
+    let findItem2 = secondtState.find((item) => item.id == data);
+
+    if ((num = 2 && !findItem2)) {
+      // setSecondState((prev) => {
+      //   return [...prev, dragedItem];
+      // });
+    }
 
     e.target.appendChild(document.getElementById(data));
 
@@ -40,12 +60,12 @@ function App() {
   // drag over
   const dragOverHandler = (e) => {
     e.preventDefault();
+
     return false;
   };
 
   // drag enter
   const dragEnterHandler = (e) => {
-    console.log("drag start handler event ", e);
     e.target.style.border = "2px dotted salmon";
   };
 
@@ -56,7 +76,6 @@ function App() {
 
   // drag end
   const dragEndHandler = (e) => {
-    console.log("drag start handler event ", e);
     e.target.style.opacity = "1";
     e.target.style.backgroundColor = "blueviolet";
   };
@@ -72,12 +91,14 @@ function App() {
       <div className="container">
         <div className="child_container">
           <ul
-            onDrop={(e) => dropHandler(e)}
+            id="ul-1"
+            onDrop={(e) => dropHandler(e, 1)}
             onDragOver={(e) => dragOverHandler(e)}
           >
             {firstState.map((item) => (
               <li
                 id={item.id}
+                key={item.id}
                 draggable="true"
                 onDragStart={(e) => dragStartHandler(e)}
                 onDragEnter={(e) => dragEnterHandler(e)}
@@ -91,7 +112,8 @@ function App() {
         </div>
         <div className="child_container">
           <ul
-            onDrop={(e) => dropHandler(e)}
+            id="ul-2"
+            onDrop={(e) => dropHandler(e, 2)}
             onDragOver={(e) => dragOverHandler(e)}
           ></ul>
         </div>
